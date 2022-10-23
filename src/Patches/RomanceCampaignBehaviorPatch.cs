@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-using TaleWorlds.CampaignSystem.SandBox.CampaignBehaviors;
+using TaleWorlds.CampaignSystem.CampaignBehaviors;
 
 namespace HousesCalradia.Patches
 {

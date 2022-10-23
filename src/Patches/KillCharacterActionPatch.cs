@@ -23,7 +23,7 @@ namespace HousesCalradia.Patches
             || clan.IsBanditFaction
             || clan == CampaignData.NeutralFaction
             || victim == Hero.MainHero
-            || clan.Lords.Any(h => h.IsAlive && !h.IsChild && h.IsActive && h.IsNoble && h != victim);
+            || clan.Lords.Any(h => h.IsAlive && !h.IsChild && h.IsActive && h.IsLord && h != victim);
 
         private static void ApplyInternalPrefix(Hero? victim,
                                                 Hero? killer,

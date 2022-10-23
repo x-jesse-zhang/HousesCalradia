@@ -4,6 +4,7 @@ using System.Linq;
 
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.Actions;
+using TaleWorlds.CampaignSystem.ComponentInterfaces;
 using TaleWorlds.Core;
 
 namespace HousesCalradia
@@ -135,7 +136,7 @@ namespace HousesCalradia
 
         private bool SuitorQualifiesForNobleMarriageSystem(Hero suitor)
             => !suitor.IsFemale
-            &&  suitor.IsNoble
+            &&  suitor.IsLord
             && !suitor.IsDead
             &&  suitor.IsActive
             &&  suitor.Clan is not null
@@ -167,7 +168,7 @@ namespace HousesCalradia
                 .SelectMany(c => c.Lords)
                 .Where(h => h.IsFemale
                          && h.IsAlive
-                         && h.IsNoble
+                         && h.IsLord
                          && h.IsActive
                          && h.Spouse is null
                          && IsMaidenAllowedForMarriageByConfig(suitor, h)

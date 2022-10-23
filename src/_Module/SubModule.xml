@@ -9,13 +9,16 @@
   <SingleplayerModule value="true"/>
   <MultiplayerModule value="false"/>
   <DependedModules>
+    <DependedModule Id="Bannerlord.Harmony" />
+    <DependedModule Id="Bannerlord.MBOptionScreen" />
     <DependedModule Id="Native"/>
     <DependedModule Id="SandBoxCore"/>
     <DependedModule Id="Sandbox"/>
     <DependedModule Id="StoryMode"/>
   </DependedModules>
   <DependedModuleMetadatas>
-    <DependedModuleMetadata id="Bannerlord.MBOptionScreen" order="LoadBeforeThis" version="v$externalmcmversion$" optional="true" />
+    <!-- included optional="true" -->
+    <DependedModuleMetadata id="Bannerlord.MBOptionScreen" order="LoadBeforeThis" version="v$externalmcmversion$" />
     <DependedModuleMetadata id="Native" order="LoadBeforeThis" version="e$gameversion$.*" />
     <DependedModuleMetadata id="SandBoxCore" order="LoadBeforeThis" version="e$gameversion$.*" />
     <DependedModuleMetadata id="Sandbox" order="LoadBeforeThis" version="e$gameversion$.*" />
@@ -24,11 +27,10 @@
   </DependedModuleMetadatas>
   <SubModules>
     <SubModule>
-      <Name value="Houses of Calradia"/>
+      <Name value="$modulename$"/>
       <DLLName value="$modulename$.dll"/>
       <SubModuleClassType value="$modulename$.SubModule"/>
       <Tags />
     </SubModule>
   </SubModules>
-  <Xmls />
 </Module>

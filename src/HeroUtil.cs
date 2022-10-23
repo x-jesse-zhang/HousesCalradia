@@ -2,6 +2,7 @@
 using System.Linq;
 
 using TaleWorlds.CampaignSystem;
+using TaleWorlds.CampaignSystem.Extensions;
 using TaleWorlds.Core;
 
 
@@ -12,12 +13,8 @@ namespace HousesCalradia
         public static Hero? SpawnNoble(Clan clan, int ageMin, int ageMax = -1, bool isFemale = false)
         {
             // Select a main template hero, which must be a Lord
-#if STABLE
-            var mainTemplateSeq = Hero.All
-#else
             var mainTemplateSeq = Hero.AllAliveHeroes.Concat(Hero.DeadOrDisabledHeroes)
-#endif
-                .Where(h => h.IsNoble
+                .Where(h => h.IsLord
                     && h.CharacterObject.Occupation == Occupation.Lord
                     && h.IsFemale == isFemale);
 
@@ -30,12 +27,8 @@ namespace HousesCalradia
             // Select a different auxiliary template to use for cross-pollination of randomized facial appearance, if possible.
             // The auxiliary template doesn't need to be a proper Lord.
 
-#if STABLE
-            var auxTemplateSeq = Hero.All
-#else
             var auxTemplateSeq = Hero.AllAliveHeroes.Concat(Hero.DeadOrDisabledHeroes)
-#endif
-                .Where(h => h.IsNoble && h != mainTemplate);
+                .Where(h => h.IsLord && h != mainTemplate);
 
             var auxTemplate = auxTemplateSeq.Where(h => h.Culture == clan.Culture && h.IsFemale != isFemale).RandomPick()
                 ?? auxTemplateSeq.Where(h => h.Culture == clan.Culture).RandomPick()
@@ -53,12 +46,8 @@ namespace HousesCalradia
                 supporterOfClan: clan,
                 age: age);
 
-#if STABLE
-            hero.Name = hero.FirstName;
-#else
-            hero.SetName(hero.FirstName);
-#endif
-            hero.IsNoble = true;
+            hero.SetName(hero.Name, hero.FirstName);
+            hero.SetNewOccupation(Occupation.Lord);
 
             // Randomize face/body parameters by simulating a cross between our main template
             // and our auxiliary template (might be same sex) + random mutation thrown into the mix
@@ -70,24 +59,14 @@ namespace HousesCalradia
             // the learning limit for the character. No special methodology here.
 
             // Attributes
-
-#if STABLE
-            for (var attr = CharacterAttributesEnum.First; attr < CharacterAttributesEnum.End; ++attr)
-                hero.SetAttributeValue(attr, MBRandom.RandomInt(6, 8));
-#else
             foreach (var attr in Attributes.All)
                 if (hero.GetAttributeValue(attr) < 4)
                     hero.HeroDeveloper.AddAttribute(attr, 7, false);
-#endif
 
             // Skills: level & focus point minimums
             const int MinRidingSkill = 100;
 
-#if STABLE
-            foreach (var skillObj in Game.Current.SkillList)
-#else
             foreach (var skillObj in Skills.All)
-#endif
             {
                 var curSkill = hero.GetSkillValue(skillObj);
                 var curFocus = hero.HeroDeveloper.GetFocus(skillObj);

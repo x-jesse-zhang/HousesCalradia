@@ -417,7 +417,7 @@ namespace HousesCalradia
             set => SetHalfByte(ref KeyPart5, 5, value);
         }
 
-        public static byte MaxHairType(bool isFemale) => isFemale ? 0x13 : 0x19;
+        public static byte MaxHairType(bool isFemale) => (byte)(isFemale ? 0x13 : 0x19);
 
         // limited set of value
         public byte HairType
